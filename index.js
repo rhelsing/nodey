@@ -49,7 +49,7 @@ var server = net.createServer(function(socket) {
   socket.pipe(socket);
 });
 
-server.listen(1337, '127.0.0.1'); // long running should be in seperate process?
+server.listen(1337, '127.0.0.1'); // long running should be in seperate process, blocks client
 
 //client
 
