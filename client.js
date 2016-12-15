@@ -1,4 +1,5 @@
 const net = require('net');
+var backoff = 0
 
 process.on('message', function(m) {
   listen_to(m.ip)
@@ -10,13 +11,19 @@ function listen_to(ip){
   client.on('error', (err) => {
     console.log(`could not connect to ${ip}`)
     if(err.code == 'ECONNREFUSED') {
-      client.setTimeout(4000, function() {
-        client.connect(1337, ip, function(){
-          console.log('Connected');
-          client.write(`Hello, server! Love, Client. ${ip}`);
+      backoff++
+      if(backoff > 3){
+        console.log("giving up forevermore on "+ip)
+
+      }else{
+        client.setTimeout(10000, function() {
+          client.connect(1337, ip, function(){
+            console.log('Connected');
+            client.write(`Hello, server! Love, Client. ${ip}`);
+          });
         });
-      });
-      console.log("will try again in 4 seconds")
+        console.log("will try again in about 10 seconds")
+      }
     }
     //try again in 5 seconds.. exponential backoff
   });

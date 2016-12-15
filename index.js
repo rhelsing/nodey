@@ -26,6 +26,7 @@ if (os.type() == "Darwin") { //'Linux', 'Windows_NT' - arp -a works on all.. par
       throw error;
     }
     ips = get_ips(stdout).diff( [my_ip] )
+    console.log(ips)
     start_server(ips)
   });
 
@@ -62,11 +63,14 @@ function start_server(ads){
     console.log('Server Received: ' + data);
   })
 
+  // ads.push('10.0.1.18')
   //1. spin up
   range(0, ads.length).forEach (i => {
-    console.log(ads[i])
+    // console.log(ads[i])
     children.push(cp.fork('./client'))
   })
+
+  console.log(children.length)
 
   for (var i = 0; i < children.length; i++){
     var child = children[i]
