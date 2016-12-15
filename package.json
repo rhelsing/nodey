@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ip": "^1.1.4"
+    "ip": "^1.1.4",
+    "lodash": "^4.17.2",
+    "node-range": "^0.1.0"
   }
 }
